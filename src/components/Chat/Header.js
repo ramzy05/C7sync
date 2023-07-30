@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Avatar,
   Badge,
@@ -67,8 +67,7 @@ const ChatHeader = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const theme = useTheme();
 
-  const [conversationMenuAnchorEl, setConversationMenuAnchorEl] =
-    React.useState(null);
+  const [conversationMenuAnchorEl, setConversationMenuAnchorEl] = useState(null);
   const openConversationMenu = Boolean(conversationMenuAnchorEl);
   const handleClickConversationMenu = (event) => {
     setConversationMenuAnchorEl(event.currentTarget);

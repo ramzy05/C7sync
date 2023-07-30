@@ -22,6 +22,8 @@ ThemeProvider.propTypes = {
   children: PropTypes.node,
 };
 
+
+
 export default function ThemeProvider({ children }) {
   const { themeMode, themeDirection } = useSettings();
 

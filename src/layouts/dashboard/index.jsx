@@ -1,14 +1,15 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
+import { Stack } from '@mui/material';
+import SideBar from './SideBar'
 
 const DashboardLayout = () => {
-
-  return (
-    <>
-      Dashboard Layout
-      <Outlet />
-    </>
-  );
+	return (
+		<Stack direction="row" sx={{ width: '100%' }}>
+			{/* SideBar */}
+			<SideBar />
+			<Outlet />
+		</Stack>
+	);
 };
 
 export default DashboardLayout;
