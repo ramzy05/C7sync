@@ -7,22 +7,21 @@ import {
 	Typography,
 	useTheme,
 } from '@mui/material';
+import { CustomScrollBar } from '../../components/Scrollbar';
 import {
 	Search,
 	SearchIconWrapper,
 	StyledInputBase,
 } from '../../components/Search';
-import { MagnifyingGlass, Plus } from 'phosphor-react';
-import { CustomScrollBar } from '../../components/Scrollbar';
-import { ChatList } from '../../data';
-import ChatElement from '../../components/ChatElement';
-import CreateGroup from '../../sections/main/CreateGroup';
 import { useState } from 'react';
+import { MagnifyingGlass, Plus } from 'phosphor-react';
+import { CallLogElement } from '../../components/CallElement';
+import { CallLogs } from '../../data';
+import StartCall from '../../sections/main/StartCall';
 
-const Group = () => {
+const Call = () => {
 	const theme = useTheme();
-	const [openDialog, setOpenDialog] = useState(false)
-
+	const [openDialog, setOpenDialog] = useState(false);
 	const handleCloseDialog =()=>{
 		setOpenDialog(false)
 	}
@@ -50,7 +49,7 @@ const Group = () => {
 				>
 					<Stack p={3} spacing={2} sx={{ maxHeight: '100vh' }}>
 						<Stack>
-							<Typography variant="h5">Groups</Typography>
+							<Typography variant="h5">Call Log</Typography>
 						</Stack>
 						<Stack sx={{ width: '100%' }}>
 							<Search>
@@ -69,11 +68,13 @@ const Group = () => {
 							justifyContent={'space-between'}
 						>
 							<Typography variant="subtitle2" component={Link}>
-								Create New Group
+								Start Call
 							</Typography>
-							<IconButton onClick={()=>{
-								setOpenDialog(true)
-							}}>
+							<IconButton
+								onClick={() => {
+									setOpenDialog(true);
+								}}
+							>
 								<Plus size={22} style={{ color: theme.palette.primary }} />
 							</IconButton>
 						</Stack>
@@ -89,20 +90,12 @@ const Group = () => {
 						>
 							<CustomScrollBar>
 								<Stack spacing={2.4}>
-									<Typography variant="subtitle2" sx={{ color: '#676767' }}>
-										Pinned
-									</Typography>
-									{ChatList.filter((el) => el.pinned).map((el, id) => {
-										return <ChatElement key={id} {...el} />;
-									})}
-								</Stack>
-								<Stack spacing={2.4} marginTop={3}>
-									<Typography variant="subtitle2" sx={{ color: '#676767' }}>
-										All Groups
-									</Typography>
-									{ChatList.filter((el) => !el.pinned).map((el, id) => {
-										return <ChatElement key={id} {...el} />;
-									})}
+									
+									{/* Call Logs */}
+                  {CallLogs.map((el,id)=>(
+                    <CallLogElement key={id} {...el}   />
+                  ))}
+
 								</Stack>
 							</CustomScrollBar>
 						</Stack>
@@ -110,10 +103,10 @@ const Group = () => {
 				</Box>
 
 				{/* Right */}
-        {/* // TODO => Reuse Conversation Components */}
+				{/* // TODO => Reuse Conversation Components */}
 			</Stack>
-			{openDialog && <CreateGroup open={openDialog} handleClose={handleCloseDialog} /> }
+      {openDialog && <StartCall open={openDialog} handleClose={handleCloseDialog} />}
 		</>
 	);
 };
-export default Group;
+export default Call;

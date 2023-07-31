@@ -16,10 +16,43 @@ import Logo from '../../assets/Images/logo.ico';
 import { Nav_Buttons, Profile_Menu } from '../../data';
 import useSettings from '../../hooks/useSettings';
 import AntSwitch from '../../components/AntSwitch';
+import { useNavigate } from 'react-router-dom';
+
+const getPath = (index) => {
+	switch (index) {
+		case 0:
+			return '/app';
+		case 1:
+			return '/group';
+		case 2:
+			return '/call';
+		case 3:
+			return '/settings';
+
+		default:
+			break;
+	}
+};
+
+const getMenuPath = (index) => {
+	switch (index) {
+		case 0:
+			return '/profile';
+		case 1:
+			return '/settings';
+		case 2:
+			// TODO => Update token & set isAuth = false
+			return '/auth/login';
+
+		default:
+			break;
+	}
+};
 
 const SideBar = () => {
 	const [selected, setSelected] = useState(0);
 	const theme = useTheme();
+	const navigate = useNavigate();
 	const { onToggleMode } = useSettings();
 
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -27,7 +60,8 @@ const SideBar = () => {
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
-	const handleClose = () => {
+	const handleClose = (id) => {
+		navigate(getMenuPath(id));
 		setAnchorEl(null);
 	};
 
@@ -86,6 +120,7 @@ const SideBar = () => {
 								<IconButton
 									onClick={() => {
 										setSelected(el.index);
+										navigate(getPath(el.index));
 									}}
 									sx={{
 										width: 'max-content',
@@ -124,6 +159,7 @@ const SideBar = () => {
 								}}
 								onClick={() => {
 									setSelected(3);
+									navigate(getPath(3));
 								}}
 							>
 								<Gear />
@@ -159,19 +195,17 @@ const SideBar = () => {
 							'aria-labelledby': 'basic-button',
 						}}
 						anchorOrigin={{
-							vertical:'bottom',
-							horizontal:'right'
-
+							vertical: 'bottom',
+							horizontal: 'right',
 						}}
 						transformOrigin={{
-							vertical:'bottom',
-							horizontal:'left'
-							
+							vertical: 'bottom',
+							horizontal: 'left',
 						}}
 					>
 						<Stack spacing={1} px={1}>
 							{Profile_Menu.map((el, id) => (
-								<MenuItem key={id} onClick={handleClose}>
+								<MenuItem key={id} onClick={() => handleClose(id)}>
 									<Stack
 										sx={{
 											width: 100,

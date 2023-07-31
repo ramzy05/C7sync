@@ -10,6 +10,7 @@ import {
 	Stack,
 	Typography,
 } from '@mui/material';
+import { CustomScrollBar } from '../../components/Scrollbar';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -99,46 +100,49 @@ const Shortcuts = ({ open, handleClose }) => {
 				sx={{ p: 4 }}
 			>
 				<DialogTitle>Keyboard Shortcuts</DialogTitle>
-				<DialogContent sx={{ mt: 4 }}>
-					<Grid container spacing={3}>
-						{list.map(({ title, combination }, id) => {
-							return (
-								<Grid item key={id} xs={6}>
-									<Stack
-										sx={{ width: '100%' }}
-										direction="row"
-										alignItems={'center'}
-										justifyContent={'space-between'}
-										spacing={3}
-									>
-										<Typography variant="caption" sx={{ fontSize: 14 }}>
-											{title}
-										</Typography>
-										<Stack spacing={2} direction="row">
-											{combination.map((el, id) => {
-												return (
-													<Button
-														key={id}
-														disabled
-														variant="contained"
-														sx={{ color: '#212121' }}
-													>
-														{el}
-													</Button>
-												);
-											})}
+				<CustomScrollBar alwaysVisible={true}>
+					<DialogContent sx={{ mt: 4, overflow: 'hidden' }}>
+						<Grid container spacing={3}>
+							{list.map(({ title, combination }, id) => {
+								return (
+									<Grid item key={id} xs={6}>
+										<Stack
+											sx={{ width: '100%' }}
+											direction="row"
+											alignItems={'center'}
+											justifyContent={'space-between'}
+											spacing={3}
+										>
+											<Typography variant="caption" sx={{ fontSize: 14 }}>
+												{title}
+											</Typography>
+											<Stack spacing={2} direction="row">
+												{combination.map((el, id) => {
+													return (
+														<Button
+															key={id}
+															disabled
+															variant="contained"
+															sx={{ color: '#212121' }}
+														>
+															{el}
+														</Button>
+													);
+												})}
+											</Stack>
 										</Stack>
-									</Stack>
-								</Grid>
-							);
-						})}
-					</Grid>
-				</DialogContent>
-        <DialogActions>
-            <Button variant='contained' onClick={handleClose}>
-              OK
-            </Button>
-        </DialogActions>
+									</Grid>
+								);
+							})}
+						</Grid>
+					</DialogContent>
+				</CustomScrollBar>
+
+				<DialogActions>
+					<Button variant="contained" onClick={handleClose}>
+						OK
+					</Button>
+				</DialogActions>
 			</Dialog>
 		</>
 	);
